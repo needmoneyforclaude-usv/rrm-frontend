@@ -1,4 +1,4 @@
-import {NavLink, Outlet} from 'react-router-dom';
+import {Link, NavLink, Outlet} from 'react-router-dom';
 import {clearToken} from '../api/client.js';
 import {useCurrentUser} from '../hooks/useCurrentUser.js';
 
@@ -33,6 +33,12 @@ export default function Layout() {
             <NavLink to="/admin/maintenance">Mentenanta</NavLink>
           )}
         </nav>
+        {!user && !loading && (
+          <div className="user-info">
+            <Link to="/login" className="btn btn-secondary">Login</Link>
+            <Link to="/signup" className="btn">Cont nou</Link>
+          </div>
+        )}
         {user && (
           <div className="user-info">
             <span>{user.name}</span>
