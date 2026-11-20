@@ -1,5 +1,5 @@
-import {Link, NavLink, Outlet} from 'react-router-dom';
-import {clearToken} from '../api/client.js';
+import {Navigate, NavLink, Outlet} from 'react-router-dom';
+import {clearToken, getToken} from '../api/client.js';
 import {useCurrentUser} from '../hooks/useCurrentUser.js';
 import NotificationsPanel from './NotificationsPanel.jsx';
 
@@ -10,50 +10,71 @@ const ROLE_LABELS = {
 };
 
 /**
- * Header-ul aplicatiei si zona in care se afiseaza paginile.
+ * Initialele din nume, pentru avatar (ex. "Ion Popescu" -> "IP").
+ * @param {string} name
+ * @return {string}
+ */
+function initials(name) {
+  return name.split(' ').filter(Boolean).slice(0, 2)
+      .map((part) => part[0].toUpperCase()).join('');
+}
+
+/**
+ * Structura paginilor dupa login: bara de sus, meniul din stanga si
+ * zona in care se afiseaza pagina curenta (ca in wireframe).
  * @return {JSX.Element}
  */
 export default function Layout() {
   const {user, loading} = useCurrentUser();
 
+  if (!getToken()) {
+    return <Navigate to="/login" replace />;
+  }
+
   const handleLogout = () => {
     clearToken();
-    window.location.assign('/');
+    window.location.assign('/login');
   };
 
   return (
     <div className="app">
-      <header className="header">
-        <span className="logo">RRM</span>
-        <nav className="nav">
-          <NavLink to="/" end>Catalog</NavLink>
-          {user && user.team_id && (
+      <header className="topbar">
+        <span className="logo-box" />
+        <span className="app-title">Research Resource Manager</span>
+        <div className="topbar-right">
+          {user && <NotificationsPanel />}
+          {user && (
+            <span className="avatar" title={
+              `${user.name} (${ROLE_LABELS[user.role] || user.role})`}>
+              {initials(user.name)}
+            </span>
+          )}
+        </div>
+      </header>
+      <div className="app-body">
+        <aside className="sidebar">
+          <NavLink to="/" end>Catalog resurse</NavLink>
+          {user?.team_id && (
             <NavLink to="/reservations">Rezervarile echipei</NavLink>
           )}
           {user?.role === 'ADMIN' && (
-            <NavLink to="/admin/maintenance">Mentenanta</NavLink>
+            <NavLink to="/admin/maintenance">Mentenanta resurse</NavLink>
           )}
-        </nav>
-        {!user && !loading && (
-          <div className="user-info">
-            <Link to="/login" className="btn btn-secondary">Login</Link>
-            <Link to="/signup" className="btn">Cont nou</Link>
-          </div>
-        )}
-        {user && (
-          <div className="user-info">
-            <NotificationsPanel />
-            <span>{user.name}</span>
-            <span className="badge">{ROLE_LABELS[user.role] || user.role}</span>
-            <button className="btn btn-link" onClick={handleLogout}>
-              Iesire
-            </button>
-          </div>
-        )}
-      </header>
-      <main className="content">
-        <Outlet context={{user, loading}} />
-      </main>
+          <button type="button" className="sidebar-link"
+            onClick={handleLogout}>
+            Deconectare
+          </button>
+          {user && (
+            <div className="sidebar-user">
+              <strong>{user.name}</strong>
+              <span className="muted">{ROLE_LABELS[user.role]}</span>
+            </div>
+          )}
+        </aside>
+        <main className="content">
+          <Outlet context={{user, loading}} />
+        </main>
+      </div>
     </div>
   );
 }
