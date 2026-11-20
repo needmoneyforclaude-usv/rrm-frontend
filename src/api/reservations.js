@@ -40,9 +40,10 @@ export function createReservation(data) {
 
 /**
  * @param {number} reservationId
+ * @param {string=} purpose scopul rezervarii (optional)
  * @return {!Promise<Object>}
  */
-export function confirmReservation(reservationId) {
+export function confirmReservation(reservationId, purpose) {
   return apiRequest(`/api/reservations/${reservationId}/confirm`,
-      {method: 'POST'});
+      {method: 'POST', body: {purpose: purpose || null}});
 }
