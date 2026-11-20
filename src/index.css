@@ -724,3 +724,47 @@ h3 {
   background: #eef3ff;
   font-weight: 600;
 }
+
+/* Dashboard admin (wireframe 07) */
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-card strong {
+  font-size: 28px;
+}
+
+.occupancy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.occupancy-row {
+  display: grid;
+  grid-template-columns: 220px 1fr 48px;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.occupancy-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+
+.occupancy-bar div {
+  height: 100%;
+  background: var(--color-primary);
+}
