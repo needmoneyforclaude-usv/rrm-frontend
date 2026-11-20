@@ -18,6 +18,7 @@ export default function CatalogPage() {
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     getCategories().then(setCategories).catch((e) => setError(e.message));
@@ -39,13 +40,25 @@ export default function CatalogPage() {
       [categories],
   );
 
+  const visible = resources.filter((r) =>
+    r.name.toLowerCase().includes(search.trim().toLowerCase()));
+
   const handleSelect = (categoryId) => {
     setSearchParams(categoryId == null ? {} : {category: categoryId});
   };
 
   return (
     <section>
-      <h1>Catalog resurse</h1>
+      <div className="page-header">
+        <h1>Catalog resurse</h1>
+        <input
+          className="search-input"
+          type="search"
+          placeholder="Cauta resursa..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
       <CategoryFilter
         categories={categories}
         selectedId={selectedId}
@@ -54,11 +67,11 @@ export default function CatalogPage() {
       {error && <p className="message message-error">{error}</p>}
       {loading ? (
         <p className="muted">Se incarca resursele...</p>
-      ) : resources.length === 0 ? (
-        <p className="message">Nu exista resurse in aceasta categorie.</p>
+      ) : visible.length === 0 ? (
+        <p className="message">Nu am gasit resurse.</p>
       ) : (
         <div className="resource-grid">
-          {resources.map((resource) => (
+          {visible.map((resource) => (
             <ResourceCard
               key={resource.id}
               resource={resource}
