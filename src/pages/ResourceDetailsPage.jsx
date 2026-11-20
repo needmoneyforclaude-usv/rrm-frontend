@@ -3,6 +3,7 @@ import {Link, useOutletContext, useParams} from 'react-router-dom';
 import {getCategories, getResource} from '../api/resources.js';
 import ReservationCalendar from '../components/ReservationCalendar.jsx';
 import ReservationDialog from '../components/ReservationDialog.jsx';
+import ResourceImage from '../components/ResourceImage.jsx';
 import {loyaltyDiscount} from '../utils/pricing.js';
 
 /**
@@ -79,7 +80,7 @@ export default function ResourceDetailsPage() {
       </div>
 
       <aside className="details-side">
-        <div className="image-placeholder" />
+        <ResourceImage resource={resource} />
         <dl className="details-info">
           <dt>Categorie</dt>
           <dd>{categoryName || '-'}</dd>

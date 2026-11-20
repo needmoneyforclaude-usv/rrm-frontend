@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import ResourceImage from './ResourceImage.jsx';
 
 /**
  * Cardul unei resurse din catalog: imagine, nume, descriere, pret pe ora.
@@ -8,7 +9,7 @@ import {Link} from 'react-router-dom';
 export default function ResourceCard({resource, categoryName}) {
   return (
     <Link to={`/resources/${resource.id}`} className="card resource-card">
-      <div className="image-placeholder" />
+      <ResourceImage resource={resource} />
       <h3>{resource.name}</h3>
       {categoryName && <span className="muted small">{categoryName}</span>}
       <p className="muted resource-description">
