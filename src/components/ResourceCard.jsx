@@ -1,21 +1,23 @@
 import {Link} from 'react-router-dom';
-import {formatPrice} from '../utils/format.js';
 
 /**
- * Cardul unei resurse din catalog.
+ * Cardul unei resurse din catalog: imagine, nume, descriere, pret pe ora.
  * @param {{resource: Object, categoryName: ?string}} props
  * @return {JSX.Element}
  */
 export default function ResourceCard({resource, categoryName}) {
   return (
     <Link to={`/resources/${resource.id}`} className="card resource-card">
-      {categoryName && <span className="badge">{categoryName}</span>}
+      <div className="image-placeholder" />
       <h3>{resource.name}</h3>
+      {categoryName && <span className="muted small">{categoryName}</span>}
       <p className="muted resource-description">
         {resource.description || 'Fara descriere'}
       </p>
       <p className="resource-price">
-        {formatPrice(resource.price_per_hour)} <span className="muted">/ ora</span>
+        {resource.in_maintenance ?
+          <span className="maintenance-label">In mentenanta</span> :
+          `${Number(resource.price_per_hour)} lei/h`}
       </p>
     </Link>
   );
