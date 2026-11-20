@@ -40,3 +40,24 @@ export function formatInterval(start, end) {
   }
   return `${dateTimeFormat.format(startDate)} - ${dateTimeFormat.format(endDate)}`;
 }
+
+/**
+ * @param {!Date} date
+ * @return {string} ex. "2026-11-20"
+ */
+export function toIsoDate(date) {
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${date.getFullYear()}-${month}-${day}`;
+}
+
+/**
+ * @param {!Date} date
+ * @param {number} days
+ * @return {!Date}
+ */
+export function addDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
