@@ -61,3 +61,31 @@ export function addDays(date, days) {
   result.setDate(result.getDate() + days);
   return result;
 }
+
+const SHORT_DAYS = ['Dum', 'Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sam'];
+
+/**
+ * @param {string} value data ISO
+ * @return {string} ex. "Mie 28.10"
+ */
+export function formatShortDay(value) {
+  const date = new Date(value);
+  return `${SHORT_DAYS[date.getDay()]} ${value.slice(8, 10)}.${value.slice(5, 7)}`;
+}
+
+/**
+ * @param {string} start
+ * @param {string} end
+ * @return {string} ex. "12:00-14:00"
+ */
+export function formatHours(start, end) {
+  return `${start.slice(11, 16)}-${end.slice(11, 16)}`;
+}
+
+/**
+ * @param {number} id
+ * @return {string} ex. "R-0042"
+ */
+export function reservationCode(id) {
+  return `R-${String(id).padStart(4, '0')}`;
+}

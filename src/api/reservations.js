@@ -11,11 +11,12 @@ export function getTeamReservations(status) {
 
 /**
  * @param {number} reservationId
+ * @param {string=} reason motivul anularii (optional)
  * @return {!Promise<Object>}
  */
-export function cancelReservation(reservationId) {
+export function cancelReservation(reservationId, reason) {
   return apiRequest(`/api/reservations/${reservationId}/cancel`,
-      {method: 'POST'});
+      {method: 'POST', body: {reason: reason || null}});
 }
 
 /**
