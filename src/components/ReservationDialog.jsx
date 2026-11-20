@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {
   cancelReservation,
   confirmReservation,
@@ -18,8 +18,14 @@ export default function ReservationDialog({resource, interval, onClose,
   const [reservation, setReservation] = useState(null);
   const [error, setError] = useState('');
   const [sending, setSending] = useState(false);
+  const created = useRef(false);
 
   useEffect(() => {
+    // in StrictMode efectul ruleaza de doua ori; rezervarea se creeaza o data
+    if (created.current) {
+      return;
+    }
+    created.current = true;
     createReservation({
       resource_id: resource.id,
       start_time: interval.start_time,
