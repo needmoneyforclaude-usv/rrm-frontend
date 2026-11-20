@@ -53,6 +53,9 @@ export default function Layout() {
       </header>
       <div className="app-body">
         <aside className="sidebar">
+          {user?.role === 'ADMIN' && (
+            <NavLink to="/admin" end>Dashboard</NavLink>
+          )}
           <NavLink to="/" end>Catalog resurse</NavLink>
           {user?.team_id && (
             <NavLink to="/reservations">Rezervarile echipei</NavLink>
