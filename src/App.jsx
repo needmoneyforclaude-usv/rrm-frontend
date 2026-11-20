@@ -1,5 +1,6 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Layout from './components/Layout.jsx';
+import AdminCalendarPage from './pages/AdminCalendarPage.jsx';
 import AdminDashboardPage from './pages/AdminDashboardPage.jsx';
 import AdminMaintenancePage from './pages/AdminMaintenancePage.jsx';
 import AdminReservationsPage from './pages/AdminReservationsPage.jsx';
@@ -27,6 +28,7 @@ export default function App() {
           />
           <Route path="/reservations" element={<TeamReservationsPage />} />
           <Route path="/admin" element={<AdminDashboardPage />} />
+          <Route path="/admin/calendar" element={<AdminCalendarPage />} />
           <Route
             path="/admin/reservations"
             element={<AdminReservationsPage />}
