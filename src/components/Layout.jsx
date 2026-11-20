@@ -1,6 +1,7 @@
 import {Link, NavLink, Outlet} from 'react-router-dom';
 import {clearToken} from '../api/client.js';
 import {useCurrentUser} from '../hooks/useCurrentUser.js';
+import NotificationsPanel from './NotificationsPanel.jsx';
 
 const ROLE_LABELS = {
   ADMIN: 'Administrator',
@@ -41,6 +42,7 @@ export default function Layout() {
         )}
         {user && (
           <div className="user-info">
+            <NotificationsPanel />
             <span>{user.name}</span>
             <span className="badge">{ROLE_LABELS[user.role] || user.role}</span>
             <button className="btn btn-link" onClick={handleLogout}>
