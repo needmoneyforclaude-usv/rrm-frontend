@@ -40,7 +40,6 @@ export default function Layout() {
     <div className="app">
       <header className="topbar">
         <div className="container topbar-inner">
-          <span className="logo-box" />
           <span className="app-title">Research Resource Manager</span>
           <div className="topbar-right">
             {user && <NotificationsPanel />}

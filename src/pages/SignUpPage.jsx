@@ -53,7 +53,6 @@ export default function SignUpPage() {
   return (
     <section className="auth">
       <form className="card auth-card" onSubmit={handleSubmit}>
-        <span className="logo-box" />
         <h1>Cont nou</h1>
         <label>
           Nume
