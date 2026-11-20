@@ -105,7 +105,10 @@ export default function AdminReservationsPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <select value={resourceId} onChange={(e) => setResourceId(e.target.value)}>
+        <select
+          value={resourceId}
+          onChange={(e) => setResourceId(e.target.value)}
+        >
           <option value="">Toate resursele</option>
           {resources.map((r) => (
             <option key={r.id} value={r.id}>{r.name}</option>
