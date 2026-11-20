@@ -39,19 +39,21 @@ export default function Layout() {
   return (
     <div className="app">
       <header className="topbar">
-        <span className="logo-box" />
-        <span className="app-title">Research Resource Manager</span>
-        <div className="topbar-right">
-          {user && <NotificationsPanel />}
-          {user && (
-            <span className="avatar" title={
-              `${user.name} (${ROLE_LABELS[user.role] || user.role})`}>
-              {initials(user.name)}
-            </span>
-          )}
+        <div className="container topbar-inner">
+          <span className="logo-box" />
+          <span className="app-title">Research Resource Manager</span>
+          <div className="topbar-right">
+            {user && <NotificationsPanel />}
+            {user && (
+              <span className="avatar" title={
+                `${user.name} (${ROLE_LABELS[user.role] || user.role})`}>
+                {initials(user.name)}
+              </span>
+            )}
+          </div>
         </div>
       </header>
-      <div className="app-body">
+      <div className="container app-body">
         <aside className="sidebar">
           {user?.role === 'ADMIN' && (
             <NavLink to="/admin" end>Dashboard</NavLink>
