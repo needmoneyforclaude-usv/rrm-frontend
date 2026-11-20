@@ -15,10 +15,10 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
         <Route element={<Layout />}>
           <Route path="/" element={<CatalogPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
           <Route
             path="/resources/:resourceId"
             element={<ResourceDetailsPage />}
