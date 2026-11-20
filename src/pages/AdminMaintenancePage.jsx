@@ -40,7 +40,7 @@ export default function AdminMaintenancePage() {
 
   return (
     <section>
-      <h1>Mentenanta resurse</h1>
+      <h1>Gestionare resurse</h1>
       <p className="muted">
         Alege resursa pe care vrei sa o scoti din uz pentru o perioada.
       </p>
