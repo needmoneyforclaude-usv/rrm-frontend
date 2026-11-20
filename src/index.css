@@ -406,3 +406,104 @@ h3 {
   border-radius: var(--radius);
   font: inherit;
 }
+
+/* Calendar rezervari */
+.calendar {
+  margin-bottom: 16px;
+}
+
+.calendar-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.calendar-grid {
+  display: grid;
+  gap: 3px;
+  overflow-x: auto;
+}
+
+.calendar-day,
+.calendar-hour {
+  font-size: 13px;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+.calendar-hour {
+  text-align: right;
+  padding-right: 6px;
+  line-height: 26px;
+}
+
+.slot {
+  display: inline-block;
+  height: 26px;
+  min-width: 20px;
+  border: none;
+  border-radius: 4px;
+  padding: 0;
+}
+
+.slot-free {
+  background: #d3f9d8;
+  cursor: pointer;
+}
+
+.slot-free:hover {
+  background: #8ce99a;
+}
+
+.slot-booked {
+  background: #ffc9c9;
+}
+
+.slot-maintenance {
+  background: #ffe8a1;
+}
+
+.slot-past {
+  background: #eceff3;
+}
+
+.slot-selected {
+  background: var(--color-primary);
+}
+
+.calendar-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.calendar-legend .slot {
+  width: 14px;
+  height: 14px;
+  min-width: 0;
+  vertical-align: middle;
+}
+
+.price-summary {
+  width: 100%;
+  margin: 12px 0;
+  border-collapse: collapse;
+}
+
+.price-summary td {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.price-summary td:last-child {
+  text-align: right;
+}
+
+.price-total td {
+  font-weight: 700;
+  border-bottom: none;
+}
