@@ -3,6 +3,9 @@ import {useOutletContext} from 'react-router-dom';
 import {getTeams} from '../api/auth.js';
 import {getAllReservations} from '../api/reservations.js';
 import {getResources} from '../api/resources.js';
+import CancelReservationDialog from
+  '../components/CancelReservationDialog.jsx';
+import {canBeCancelled} from '../components/ReservationDetailsDialog.jsx';
 import StatusBadge from '../components/StatusBadge.jsx';
 import {
   formatDateTime,
@@ -35,6 +38,9 @@ export default function AdminReservationsPage() {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [toCancel, setToCancel] = useState(null);
+  const [reloadKey, setReloadKey] = useState(0);
 
   const isAdmin = user?.role === 'ADMIN';
 
@@ -62,7 +68,13 @@ export default function AdminReservationsPage() {
         })
         .catch((e) => setError(e.message))
         .finally(() => setLoading(false));
-  }, [isAdmin, status, resourceId, teamId]);
+  }, [isAdmin, status, resourceId, teamId, reloadKey]);
+
+  const handleCancelled = () => {
+    setToCancel(null);
+    setSuccess('Rezervarea a fost anulata. Echipa a fost notificata.');
+    setReloadKey((key) => key + 1);
+  };
 
   // cautare dupa numele sau emailul celui care a rezervat
   const visible = useMemo(() => {
@@ -128,6 +140,7 @@ export default function AdminReservationsPage() {
       </div>
 
       {error && <p className="message message-error">{error}</p>}
+      {success && <p className="message message-success">{success}</p>}
       {loading ? (
         <p className="muted">Se incarca rezervarile...</p>
       ) : visible.length === 0 ? (
@@ -146,6 +159,7 @@ export default function AdminReservationsPage() {
                 <th>Scop</th>
                 <th>Pret final</th>
                 <th>Stare</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -176,6 +190,21 @@ export default function AdminReservationsPage() {
                     {r.final_price != null ? formatPrice(r.final_price) : '-'}
                   </td>
                   <td><StatusBadge status={r.status} /></td>
+                  <td className="table-actions">
+                    {canBeCancelled(r) ? (
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => {
+                          setSuccess('');
+                          setToCancel(r);
+                        }}
+                      >
+                        Anuleaza
+                      </button>
+                    ) : (
+                      <span className="muted">&mdash;</span>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -184,6 +213,13 @@ export default function AdminReservationsPage() {
       )}
       {!loading && (
         <p className="muted small">{visible.length} rezervari afisate</p>
+      )}
+      {toCancel && (
+        <CancelReservationDialog
+          reservation={toCancel}
+          onClose={() => setToCancel(null)}
+          onCancelled={handleCancelled}
+        />
       )}
     </section>
   );
