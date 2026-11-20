@@ -825,6 +825,19 @@ h3 {
   height: 150px;
 }
 
-.file-button {
+.resource-form-image .file-button {
+  display: block;
+  flex: 0 0 auto;
+  height: auto;
   text-align: center;
+}
+
+.thumb-cell {
+  width: 76px;
+}
+
+.thumb-cell .resource-image,
+.thumb-cell .image-placeholder {
+  width: 60px;
+  height: 40px;
 }
