@@ -48,3 +48,14 @@ export function confirmReservation(reservationId, purpose) {
   return apiRequest(`/api/reservations/${reservationId}/confirm`,
       {method: 'POST', body: {purpose: purpose || null}});
 }
+
+/**
+ * Toate rezervarile (doar pentru admin), cu filtre optionale.
+ * @param {{status?: string, resourceId?: number, teamId?: number}=} filters
+ * @return {!Promise<!Array<Object>>}
+ */
+export function getAllReservations({status, resourceId, teamId} = {}) {
+  return apiRequest('/api/reservations', {
+    params: {status, resource_id: resourceId, team_id: teamId},
+  });
+}
