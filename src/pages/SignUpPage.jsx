@@ -53,6 +53,7 @@ export default function SignUpPage() {
   return (
     <section className="auth">
       <form className="card auth-card" onSubmit={handleSubmit}>
+        <span className="logo-box" />
         <h1>Cont nou</h1>
         <label>
           Nume
@@ -60,9 +61,9 @@ export default function SignUpPage() {
             required />
         </label>
         <label>
-          Email USV
+          Email institutional
           <input name="email" type="email" value={form.email}
-            onChange={handleChange} placeholder="nume@usv.ro" required />
+            onChange={handleChange} placeholder="nume@student.usv.ro" required />
         </label>
         <label>
           Parola (minim 6 caractere)

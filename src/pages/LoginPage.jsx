@@ -30,14 +30,15 @@ export default function LoginPage() {
   return (
     <section className="auth">
       <form className="card auth-card" onSubmit={handleSubmit}>
+        <span className="logo-box" />
         <h1>Autentificare</h1>
         <label>
-          Email
+          Email institutional
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="nume@usv.ro"
+            placeholder="nume@student.usv.ro"
             required
           />
         </label>
