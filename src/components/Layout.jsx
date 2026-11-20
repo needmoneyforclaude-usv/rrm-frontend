@@ -62,6 +62,12 @@ export default function Layout() {
             <NavLink to="/reservations">Rezervarile echipei</NavLink>
           )}
           {user?.role === 'ADMIN' && (
+            <NavLink to="/admin/calendar">Calendar rezervari</NavLink>
+          )}
+          {user?.role === 'ADMIN' && (
+            <NavLink to="/admin/reservations">Toate rezervarile</NavLink>
+          )}
+          {user?.role === 'ADMIN' && (
             <NavLink to="/admin/maintenance">Gestionare resurse</NavLink>
           )}
           <button type="button" className="sidebar-link"
