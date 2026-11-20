@@ -1,9 +1,17 @@
 import {useCallback, useEffect, useState} from 'react';
-import {useOutletContext} from 'react-router-dom';
+import {Link, useOutletContext} from 'react-router-dom';
+import {getTeams} from '../api/auth.js';
 import {getToken} from '../api/client.js';
-import {cancelReservation, getTeamReservations} from '../api/reservations.js';
+import {getTeamReservations} from '../api/reservations.js';
+import CancelReservationDialog from
+  '../components/CancelReservationDialog.jsx';
 import StatusBadge from '../components/StatusBadge.jsx';
-import {formatInterval, formatPrice} from '../utils/format.js';
+import {
+  formatHours,
+  formatPrice,
+  formatShortDay,
+  reservationCode,
+} from '../utils/format.js';
 
 const FILTERS = [
   {value: '', label: 'Toate'},
@@ -23,7 +31,8 @@ export default function TeamReservationsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [cancellingId, setCancellingId] = useState(null);
+  const [toCancel, setToCancel] = useState(null);
+  const [teamName, setTeamName] = useState('');
 
   const loadReservations = useCallback(() => {
     setLoading(true);
@@ -44,26 +53,25 @@ export default function TeamReservationsPage() {
 
   const canCancel = (reservation) =>
     user?.role === 'LEAD' &&
-    reservation.status !== 'CANCELLED' &&
+    ['PENDING', 'CONFIRMED'].includes(reservation.status) &&
     new Date(reservation.start_time) > new Date();
 
-  const handleCancel = async (reservation) => {
-    const confirmed = window.confirm(
-        `Anulezi rezervarea pentru ${reservation.resource_name}?`);
-    if (!confirmed) {
+  useEffect(() => {
+    if (!user?.team_id) {
       return;
     }
-    setCancellingId(reservation.id);
-    setSuccess('');
-    try {
-      await cancelReservation(reservation.id);
-      setSuccess('Rezervarea a fost anulata. Echipa a fost notificata.');
-      await loadReservations();
-    } catch (e) {
-      setError(e.message);
-    } finally {
-      setCancellingId(null);
-    }
+    getTeams()
+        .then((teams) => {
+          const team = teams.find((t) => t.id === user.team_id);
+          setTeamName(team ? team.name : '');
+        })
+        .catch(() => null);
+  }, [user?.team_id]);
+
+  const handleCancelled = async () => {
+    setToCancel(null);
+    setSuccess('Rezervarea a fost anulata. Echipa a fost notificata.');
+    await loadReservations();
   };
 
   if (!getToken()) {
@@ -76,7 +84,13 @@ export default function TeamReservationsPage() {
 
   return (
     <section>
-      <h1>Rezervarile echipei</h1>
+      <div className="page-header">
+        <div>
+          <h1>Rezervarile echipei</h1>
+          {teamName && <p className="muted small">Echipa {teamName}</p>}
+        </div>
+        <Link to="/" className="btn">Rezervare noua</Link>
+      </div>
       <div className="category-filter">
         {FILTERS.map((filter) => (
           <button
@@ -99,7 +113,9 @@ export default function TeamReservationsPage() {
           <table className="table">
             <thead>
               <tr>
+                <th>ID</th>
                 <th>Resursa</th>
+                <th>Zi</th>
                 <th>Interval</th>
                 <th>Pret final</th>
                 <th>Stare</th>
@@ -109,10 +125,11 @@ export default function TeamReservationsPage() {
             <tbody>
               {reservations.map((reservation) => (
                 <tr key={reservation.id}>
+                  <td>{reservationCode(reservation.id)}</td>
                   <td>{reservation.resource_name}</td>
+                  <td>{formatShortDay(reservation.start_time)}</td>
                   <td>
-                    {formatInterval(reservation.start_time,
-                        reservation.end_time)}
+                    {formatHours(reservation.start_time, reservation.end_time)}
                   </td>
                   <td>
                     {reservation.final_price != null ?
@@ -124,16 +141,18 @@ export default function TeamReservationsPage() {
                   </td>
                   <td><StatusBadge status={reservation.status} /></td>
                   <td className="table-actions">
-                    {canCancel(reservation) && (
+                    {canCancel(reservation) ? (
                       <button
-                        className="btn btn-danger"
-                        disabled={cancellingId === reservation.id}
-                        onClick={() => handleCancel(reservation)}
+                        className="btn btn-secondary"
+                        onClick={() => {
+                          setSuccess('');
+                          setToCancel(reservation);
+                        }}
                       >
-                        {cancellingId === reservation.id ?
-                          'Se anuleaza...' :
-                          'Anuleaza'}
+                        Anuleaza
                       </button>
+                    ) : (
+                      <span className="muted">&mdash;</span>
                     )}
                   </td>
                 </tr>
@@ -141,6 +160,13 @@ export default function TeamReservationsPage() {
             </tbody>
           </table>
         </div>
+      )}
+      {toCancel && (
+        <CancelReservationDialog
+          reservation={toCancel}
+          onClose={() => setToCancel(null)}
+          onCancelled={handleCancelled}
+        />
       )}
       {user && user.role !== 'LEAD' && (
         <p className="muted">Doar Team Lead-ul poate anula rezervari.</p>
