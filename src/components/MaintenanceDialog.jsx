@@ -3,8 +3,8 @@ import {
   createMaintenance,
   getAffectedReservations,
 } from '../api/maintenance.js';
-import {formatInterval} from '../utils/format.js';
-import StatusBadge from './StatusBadge.jsx';
+import {getTeams} from '../api/auth.js';
+import {formatShortDay} from '../utils/format.js';
 
 /**
  * Dialogul in care adminul seteaza o perioada de mentenanta.
@@ -23,6 +23,14 @@ export default function MaintenanceDialog({resource, onClose, onSaved}) {
   const [affected, setAffected] = useState(null);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [teams, setTeams] = useState({});
+
+  useEffect(() => {
+    getTeams()
+        .then((data) => setTeams(
+            Object.fromEntries(data.map((t) => [t.id, t.name]))))
+        .catch(() => null);
+  }, []);
 
   const intervalValid = startTime && endTime && endTime > startTime;
 
@@ -75,7 +83,7 @@ export default function MaintenanceDialog({resource, onClose, onSaved}) {
         onClick={(event) => event.stopPropagation()}
         onSubmit={handleSubmit}
       >
-        <h2>Mentenanta: {resource.name}</h2>
+        <h2>Mentenanta &ndash; {resource.name}</h2>
 
         <div className="form-row">
           <label>
@@ -119,17 +127,16 @@ export default function MaintenanceDialog({resource, onClose, onSaved}) {
               <>
                 <p className="affected-warning">
                   {affected.length === 1 ?
-                    '1 rezervare va fi anulata' :
-                    `${affected.length} rezervari vor fi anulate`}
-                  {' '}si echipele vor fi notificate:
+                    '1 rezervare afectata' :
+                    `${affected.length} rezervari afectate`} (vor fi anulate)
                 </p>
                 <ul className="simple-list">
                   {affected.map((reservation) => (
                     <li key={reservation.id}>
-                      {formatInterval(reservation.start_time,
-                          reservation.end_time)}
-                      {' '}&ndash; echipa #{reservation.team_id}{' '}
-                      <StatusBadge status={reservation.status} />
+                      Echipa {teams[reservation.team_id] ||
+                        `#${reservation.team_id}`}{' '}
+                      &ndash; {formatShortDay(reservation.start_time)},{' '}
+                      {reservation.start_time.slice(11, 16)}
                     </li>
                   ))}
                 </ul>
@@ -149,7 +156,8 @@ export default function MaintenanceDialog({resource, onClose, onSaved}) {
             className={affected?.length ? 'btn btn-danger' : 'btn'}
             disabled={saving || !intervalValid}
           >
-            {saving ? 'Se salveaza...' : 'Salveaza mentenanta'}
+            {saving ? 'Se salveaza...' :
+              affected?.length ? 'Salveaza si anuleaza' : 'Salveaza'}
           </button>
         </div>
       </form>

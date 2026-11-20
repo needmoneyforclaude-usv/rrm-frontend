@@ -461,6 +461,7 @@ h3 {
 
 .affected {
   background: var(--color-bg);
+  border: 1px dashed var(--color-border);
   border-radius: var(--radius);
   padding: 12px;
   font-size: 14px;
