@@ -304,6 +304,11 @@ h3 {
   border-color: var(--color-danger);
 }
 
+.status-expired {
+  color: var(--color-muted);
+  border-color: var(--color-muted);
+}
+
 .table-actions {
   text-align: right;
   white-space: nowrap;

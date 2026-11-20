@@ -2,6 +2,7 @@ const STATUS_LABELS = {
   PENDING: 'In asteptare',
   CONFIRMED: 'Confirmata',
   CANCELLED: 'Anulata',
+  EXPIRED: 'Expirata',
   COMPLETED: 'Finalizata',
 };
 
