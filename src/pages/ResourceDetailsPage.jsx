@@ -1,10 +1,12 @@
 import {useEffect, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useOutletContext, useParams} from 'react-router-dom';
 import {
   getCategories,
   getResource,
   getResourceMaintenance,
 } from '../api/resources.js';
+import ReservationCalendar from '../components/ReservationCalendar.jsx';
+import ReservationDialog from '../components/ReservationDialog.jsx';
 import {formatInterval, formatPrice} from '../utils/format.js';
 
 /**
@@ -13,10 +15,15 @@ import {formatInterval, formatPrice} from '../utils/format.js';
  */
 export default function ResourceDetailsPage() {
   const {resourceId} = useParams();
+  const {user} = useOutletContext();
   const [resource, setResource] = useState(null);
   const [categoryName, setCategoryName] = useState('');
   const [maintenance, setMaintenance] = useState([]);
   const [error, setError] = useState('');
+  const [selected, setSelected] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [calendarKey, setCalendarKey] = useState(0);
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
     setError('');
@@ -86,7 +93,52 @@ export default function ResourceDetailsPage() {
           </ul>
         )}
       </div>
-      {/* NEED-27: aici vine calendarul resursei + dialogul de rezervare */}
+      <div className="card">
+        <h2>Calendar si rezervare</h2>
+        {success && <p className="message message-success">{success}</p>}
+        <ReservationCalendar
+          resourceId={resourceId}
+          reloadKey={calendarKey}
+          onSelect={setSelected}
+        />
+        {user?.role === 'LEAD' ? (
+          <button
+            className="btn"
+            disabled={!selected}
+            onClick={() => {
+              setSuccess('');
+              setDialogOpen(true);
+            }}
+          >
+            {selected ?
+              `Rezerva ${formatInterval(selected.start_time,
+                  selected.end_time)}` :
+              'Alege un interval din calendar'}
+          </button>
+        ) : (
+          <p className="muted">
+            {user ?
+              'Doar Team Lead-ul echipei poate face rezervari.' :
+              <><Link to="/login">Intra in cont</Link> ca sa rezervi.</>}
+          </p>
+        )}
+      </div>
+
+      {dialogOpen && selected && (
+        <ReservationDialog
+          resource={resource}
+          interval={selected}
+          onClose={() => {
+            setDialogOpen(false);
+            setCalendarKey((k) => k + 1);
+          }}
+          onDone={(message) => {
+            setDialogOpen(false);
+            setSuccess(message);
+            setCalendarKey((k) => k + 1);
+          }}
+        />
+      )}
     </section>
   );
 }
