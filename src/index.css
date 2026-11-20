@@ -507,3 +507,66 @@ h3 {
   font-weight: 700;
   border-bottom: none;
 }
+
+/* Notificari */
+.notifications {
+  position: relative;
+}
+
+.notifications-button {
+  position: relative;
+  font-size: 18px;
+}
+
+.notifications-count {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  min-width: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--color-danger);
+  color: #fff;
+  font-size: 11px;
+  line-height: 18px;
+}
+
+.notifications-panel {
+  position: absolute;
+  right: 0;
+  top: 36px;
+  z-index: 10;
+  width: 340px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.notifications-panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.notifications-panel li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.notifications-panel li + li {
+  border-top: 1px solid var(--color-border);
+}
+
+.notification-unread {
+  background: #eef3ff;
+  font-weight: 600;
+}
