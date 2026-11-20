@@ -662,7 +662,13 @@ h3 {
 
 .notifications-button {
   position: relative;
-  font-size: 18px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  font-size: 15px;
+  line-height: 30px;
 }
 
 .notifications-count {

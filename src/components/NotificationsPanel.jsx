@@ -37,7 +37,12 @@ export default function NotificationsPanel() {
       <button
         type="button"
         className="btn btn-link notifications-button"
-        onClick={() => setOpen(!open)}
+        onClick={() => {
+          if (!open) {
+            load();
+          }
+          setOpen(!open);
+        }}
         aria-label="Notificari"
       >
         &#128276;
