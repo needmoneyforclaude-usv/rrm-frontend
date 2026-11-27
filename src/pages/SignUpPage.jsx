@@ -2,12 +2,14 @@ import {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {getTeams, login, register} from '../api/auth.js';
 
+const NEW_TEAM = 'new';
+
 const emptyForm = {
   name: '',
   email: '',
   password: '',
   teamId: '',
-  affiliationDate: '',
+  newTeamName: '',
 };
 
 export default function SignUpPage() {
@@ -34,8 +36,10 @@ export default function SignUpPage() {
         name: form.name,
         email: form.email,
         password: form.password,
-        team_id: form.teamId ? Number(form.teamId) : null,
-        affiliation_date: form.affiliationDate || null,
+        team_id: form.teamId && form.teamId !== NEW_TEAM ?
+          Number(form.teamId) : null,
+        new_team_name: form.teamId === NEW_TEAM ?
+          form.newTeamName.trim() : null,
       });
       await login(form.email, form.password);
       navigate('/');
@@ -72,13 +76,19 @@ export default function SignUpPage() {
             {teams.map((team) => (
               <option key={team.id} value={team.id}>{team.name}</option>
             ))}
+            <option value={NEW_TEAM}>+ Echipa noua...</option>
           </select>
         </label>
-        <label>
-          Data afilierii la USV
-          <input name="affiliationDate" type="date"
-            value={form.affiliationDate} onChange={handleChange} />
-        </label>
+        {form.teamId === NEW_TEAM && (
+          <label>
+            Numele echipei noi
+            <input name="newTeamName" value={form.newTeamName}
+              onChange={handleChange} maxLength={100} required />
+            <span className="muted small">
+              Vei fi Team Lead-ul echipei si vei putea face rezervari.
+            </span>
+          </label>
+        )}
         {error && <p className="message message-error">{error}</p>}
         <button className="btn" type="submit" disabled={sending}>
           {sending ? 'Se trimite...' : 'Creeaza cont'}
