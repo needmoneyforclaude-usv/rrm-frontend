@@ -1,14 +1,15 @@
 import {useEffect, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import {getResources} from '../api/resources.js';
+import DeleteResourceDialog from '../components/DeleteResourceDialog.jsx';
 import MaintenanceDialog from '../components/MaintenanceDialog.jsx';
 import ResourceFormDialog from '../components/ResourceFormDialog.jsx';
 import ResourceImage from '../components/ResourceImage.jsx';
 import {formatPrice} from '../utils/format.js';
 
 /**
- * Zona de admin: lista resurselor, adaugare / editare resursa si setarea
- * perioadelor de mentenanta.
+ * Zona de admin: lista resurselor, adaugare / editare / stergere resursa si
+ * setarea perioadelor de mentenanta.
  * @return {JSX.Element}
  */
 export default function AdminMaintenancePage() {
@@ -19,6 +20,7 @@ export default function AdminMaintenancePage() {
   const [success, setSuccess] = useState('');
   // null = inchis, {} = resursa noua, altfel resursa editata
   const [editing, setEditing] = useState(null);
+  const [deleting, setDeleting] = useState(null);
 
   const loadResources = () => {
     getResources().then(setResources).catch((e) => setError(e.message));
@@ -33,6 +35,12 @@ export default function AdminMaintenancePage() {
     setSuccess(wasEdit ?
       `Resursa ${saved.name} a fost actualizata.` :
       `Resursa ${saved.name} a fost adaugata.`);
+    loadResources();
+  };
+
+  const handleResourceDeleted = () => {
+    setSuccess(`Resursa ${deleting.name} a fost stearsa.`);
+    setDeleting(null);
     loadResources();
   };
 
@@ -61,7 +69,8 @@ export default function AdminMaintenancePage() {
         <div>
           <h1>Gestionare resurse</h1>
           <p className="muted small">
-            Adauga resurse noi, editeaza-le sau seteaza perioade de mentenanta.
+            Adauga resurse noi, editeaza-le, sterge-le sau seteaza perioade de
+            mentenanta.
           </p>
         </div>
         <button
@@ -112,6 +121,15 @@ export default function AdminMaintenancePage() {
                     }}
                   >
                     Seteaza mentenanta
+                  </button>{' '}
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                      setSuccess('');
+                      setDeleting(resource);
+                    }}
+                  >
+                    Sterge
                   </button>
                 </td>
               </tr>
@@ -124,6 +142,13 @@ export default function AdminMaintenancePage() {
           resource={editing.id ? editing : null}
           onClose={() => setEditing(null)}
           onSaved={handleResourceSaved}
+        />
+      )}
+      {deleting && (
+        <DeleteResourceDialog
+          resource={deleting}
+          onClose={() => setDeleting(null)}
+          onDeleted={handleResourceDeleted}
         />
       )}
       {selected && (

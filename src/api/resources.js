@@ -49,6 +49,14 @@ export function updateResource(resourceId, data) {
 }
 
 /**
+ * @param {number} resourceId
+ * @return {!Promise<null>}
+ */
+export function deleteResource(resourceId) {
+  return apiRequest(`/api/resources/${resourceId}`, {method: 'DELETE'});
+}
+
+/**
  * Citeste fisierul ca base64 (fara prefixul "data:...;base64,").
  * @param {!File} file
  * @return {!Promise<string>}
