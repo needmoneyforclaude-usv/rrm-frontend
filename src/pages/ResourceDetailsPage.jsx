@@ -6,11 +6,6 @@ import ReservationDialog from '../components/ReservationDialog.jsx';
 import ResourceImage from '../components/ResourceImage.jsx';
 import {loyaltyDiscount} from '../utils/pricing.js';
 
-/**
- * Detaliile unei resurse: calendarul saptamanal in stanga si informatiile
- * resursei in dreapta. Click pe un slot liber deschide dialogul de rezervare.
- * @return {JSX.Element}
- */
 export default function ResourceDetailsPage() {
   const {resourceId} = useParams();
   const {user} = useOutletContext();

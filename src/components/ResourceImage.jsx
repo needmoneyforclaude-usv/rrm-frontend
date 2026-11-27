@@ -1,11 +1,5 @@
 import {useState} from 'react';
 
-/**
- * Imaginea unei resurse. Daca nu are imagine sau fisierul lipseste,
- * se afiseaza placeholder-ul din wireframe.
- * @param {{resource: Object}} props
- * @return {JSX.Element}
- */
 export default function ResourceImage({resource}) {
   const [failed, setFailed] = useState(false);
 

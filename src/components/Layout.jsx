@@ -9,21 +9,11 @@ const ROLE_LABELS = {
   MEMBER: 'Membru',
 };
 
-/**
- * Initialele din nume, pentru avatar (ex. "Ion Popescu" -> "IP").
- * @param {string} name
- * @return {string}
- */
 function initials(name) {
   return name.split(' ').filter(Boolean).slice(0, 2)
       .map((part) => part[0].toUpperCase()).join('');
 }
 
-/**
- * Structura paginilor dupa login: bara de sus, meniul din stanga si
- * zona in care se afiseaza pagina curenta (ca in wireframe).
- * @return {JSX.Element}
- */
 export default function Layout() {
   const {user, loading} = useCurrentUser();
 

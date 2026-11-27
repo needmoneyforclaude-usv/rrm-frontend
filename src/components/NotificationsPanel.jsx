@@ -4,10 +4,6 @@ import {formatDateTime} from '../utils/format.js';
 
 const REFRESH_MS = 30000;
 
-/**
- * Clopotelul din header cu notificarile userului logat.
- * @return {JSX.Element}
- */
 export default function NotificationsPanel() {
   const [notifications, setNotifications] = useState([]);
   const [open, setOpen] = useState(false);

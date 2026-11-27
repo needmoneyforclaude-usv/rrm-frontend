@@ -10,10 +10,6 @@ const emptyForm = {
   affiliationDate: '',
 };
 
-/**
- * Pagina de creare cont. Dupa inregistrare userul e logat direct.
- * @return {JSX.Element}
- */
 export default function SignUpPage() {
   const navigate = useNavigate();
   const [form, setForm] = useState(emptyForm);

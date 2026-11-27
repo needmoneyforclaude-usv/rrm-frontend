@@ -34,7 +34,6 @@ h3 {
   margin: 0 0 12px;
 }
 
-/* Bara de sus + meniul din stanga (ca in wireframe) */
 .app {
   min-height: 100vh;
   display: flex;
@@ -144,7 +143,6 @@ h3 {
   padding: 24px 28px;
 }
 
-/* Elemente comune */
 .btn {
   border: 1px solid var(--color-primary);
   background: var(--color-primary);
@@ -233,7 +231,6 @@ h3 {
   color: var(--color-success);
 }
 
-/* Catalog */
 .category-filter {
   display: flex;
   flex-wrap: wrap;
@@ -349,7 +346,6 @@ h3 {
   font-weight: 600;
 }
 
-/* Detalii resursa */
 .details {
   display: flex;
   flex-direction: column;
@@ -379,7 +375,6 @@ h3 {
   line-height: 1.8;
 }
 
-/* Tabel rezervari */
 .table-wrapper {
   padding: 0;
   overflow-x: auto;
@@ -433,7 +428,6 @@ h3 {
   white-space: nowrap;
 }
 
-/* Dialog */
 .dialog-backdrop {
   position: fixed;
   inset: 0;
@@ -503,7 +497,6 @@ h3 {
   gap: 8px;
 }
 
-/* Login / sign up */
 .auth {
   display: flex;
   align-items: center;
@@ -535,7 +528,6 @@ h3 {
   font: inherit;
 }
 
-/* Detalii resursa + calendar (wireframe 03) */
 .details-layout {
   display: grid;
   grid-template-columns: 1fr 280px;
@@ -653,7 +645,6 @@ h3 {
   border-style: solid;
 }
 
-/* Sumarul de pret din dialogul de rezervare (wireframe 04) */
 .price-box {
   display: flex;
   flex-direction: column;
@@ -677,7 +668,6 @@ h3 {
   font-weight: 700;
 }
 
-/* Notificari */
 .notifications {
   position: relative;
 }
@@ -746,7 +736,6 @@ h3 {
   font-weight: 600;
 }
 
-/* Dashboard admin (wireframe 07) */
 .stat-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -790,7 +779,6 @@ h3 {
   background: var(--color-primary);
 }
 
-/* Formular resursa (admin) */
 .dialog-wide {
   width: min(720px, calc(100vw - 32px));
   max-width: none;
@@ -843,7 +831,6 @@ h3 {
   height: 40px;
 }
 
-/* Admin - toate rezervarile */
 .filters-row {
   display: flex;
   flex-wrap: wrap;
@@ -865,7 +852,6 @@ h3 {
   gap: 2px;
 }
 
-/* Admin - calendarul tuturor rezervarilor */
 .admin-calendar-toolbar {
   align-items: center;
 }
@@ -994,7 +980,6 @@ h3 {
   background: rgba(214, 69, 69, 0.08);
 }
 
-/* Dialogul cu detaliile rezervarii */
 .dialog-title-row {
   display: flex;
   align-items: center;

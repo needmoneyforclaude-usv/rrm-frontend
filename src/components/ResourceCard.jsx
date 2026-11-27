@@ -1,11 +1,6 @@
 import {Link} from 'react-router-dom';
 import ResourceImage from './ResourceImage.jsx';
 
-/**
- * Cardul unei resurse din catalog: imagine, nume, descriere, pret pe ora.
- * @param {{resource: Object, categoryName: ?string}} props
- * @return {JSX.Element}
- */
 export default function ResourceCard({resource, categoryName}) {
   return (
     <Link to={`/resources/${resource.id}`} className="card resource-card">

@@ -20,10 +20,6 @@ const FILTERS = [
   {value: 'CANCELLED', label: 'Anulate'},
 ];
 
-/**
- * Rezervarile echipei utilizatorului logat.
- * @return {JSX.Element}
- */
 export default function TeamReservationsPage() {
   const {user} = useOutletContext();
   const [status, setStatus] = useState('');

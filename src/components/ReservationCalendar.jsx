@@ -12,13 +12,6 @@ const STATUS_LABELS = {
   PAST: '-',
 };
 
-/**
- * Calendarul saptamanal al unei resurse (luni-vineri, sloturi de 2 ore).
- * Click pe un slot liber -> onPick(slot).
- * @param {{resourceId: string, reloadKey: number,
- *     onPick: function({start_time: string, end_time: string})}} props
- * @return {JSX.Element}
- */
 export default function ReservationCalendar({resourceId, reloadKey, onPick}) {
   const [week, setWeek] = useState(toIsoDate(new Date()));
   const [slots, setSlots] = useState([]);
@@ -98,10 +91,6 @@ export default function ReservationCalendar({resourceId, reloadKey, onPick}) {
   );
 }
 
-/**
- * @param {string} day "2026-11-23"
- * @return {string} "23.11"
- */
 function formatDay(day) {
   return `${day.slice(8, 10)}.${day.slice(5, 7)}`;
 }

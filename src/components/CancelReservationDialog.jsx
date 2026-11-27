@@ -2,12 +2,6 @@ import {useState} from 'react';
 import {cancelReservation} from '../api/reservations.js';
 import {formatHours, formatShortDay, reservationCode} from '../utils/format.js';
 
-/**
- * Confirmarea anularii unei rezervari (wireframe 06).
- * @param {{reservation: Object, onClose: function(),
- *     onCancelled: function()}} props
- * @return {JSX.Element}
- */
 export default function CancelReservationDialog({reservation, onClose,
   onCancelled}) {
   const [reason, setReason] = useState('');

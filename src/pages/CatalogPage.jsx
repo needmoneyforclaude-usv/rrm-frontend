@@ -4,10 +4,6 @@ import {getCategories, getResources} from '../api/resources.js';
 import CategoryFilter from '../components/CategoryFilter.jsx';
 import ResourceCard from '../components/ResourceCard.jsx';
 
-/**
- * Catalogul de resurse, cu filtrare dupa categorie (?category=ID).
- * @return {JSX.Element}
- */
 export default function CatalogPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedId = searchParams.get('category') ?
