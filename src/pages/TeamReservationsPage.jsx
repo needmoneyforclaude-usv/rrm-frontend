@@ -17,6 +17,7 @@ const FILTERS = [
   {value: '', label: 'Toate'},
   {value: 'PENDING', label: 'In asteptare'},
   {value: 'CONFIRMED', label: 'Confirmate'},
+  {value: 'REJECTED', label: 'Respinse'},
   {value: 'CANCELLED', label: 'Anulate'},
 ];
 

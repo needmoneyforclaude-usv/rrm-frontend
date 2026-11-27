@@ -10,7 +10,7 @@ import ReservationDetailsDialog from
 import {addDays, formatHours, toIsoDate} from '../utils/format.js';
 
 const DAY_NAMES = ['Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sam', 'Dum'];
-const INACTIVE = ['CANCELLED', 'EXPIRED'];
+const INACTIVE = ['CANCELLED', 'EXPIRED', 'REJECTED'];
 
 function mondayOf(date) {
   const monday = new Date(date);

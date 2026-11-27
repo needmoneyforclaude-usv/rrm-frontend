@@ -418,6 +418,11 @@ h3 {
   border-color: var(--color-danger);
 }
 
+.status-rejected {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
 .status-expired {
   color: var(--color-muted);
   border-color: var(--color-muted);
@@ -638,6 +643,11 @@ h3 {
   border: 2px solid var(--color-text);
   color: var(--color-text);
   font-weight: 600;
+}
+
+.slot-requested {
+  border: 2px dashed var(--color-warning);
+  color: var(--color-warning);
 }
 
 .slot-past {
@@ -944,7 +954,8 @@ h3 {
 }
 
 .booking-cancelled,
-.booking-expired {
+.booking-expired,
+.booking-rejected {
   border-left-color: var(--color-danger);
   background: rgba(214, 69, 69, 0.08);
   text-decoration: line-through;
@@ -1012,4 +1023,8 @@ h3 {
 .details-list dd {
   margin: 0;
   text-align: right;
+}
+
+.text-warning {
+  color: var(--color-warning);
 }

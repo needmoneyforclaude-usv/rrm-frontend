@@ -18,9 +18,18 @@ export function createReservation(data) {
   return apiRequest('/api/reservations', {method: 'POST', body: data});
 }
 
-export function confirmReservation(reservationId, purpose) {
-  return apiRequest(`/api/reservations/${reservationId}/confirm`,
-      {method: 'POST', body: {purpose: purpose || null}});
+export function quoteReservation(data) {
+  return apiRequest('/api/reservations/quote', {method: 'POST', body: data});
+}
+
+export function approveReservation(reservationId) {
+  return apiRequest(`/api/reservations/${reservationId}/approve`,
+      {method: 'POST'});
+}
+
+export function rejectReservation(reservationId, reason) {
+  return apiRequest(`/api/reservations/${reservationId}/reject`,
+      {method: 'POST', body: {reason: reason || null}});
 }
 
 export function getAllReservations(

@@ -52,6 +52,9 @@ export default function Layout() {
             <NavLink to="/reservations">Rezervarile echipei</NavLink>
           )}
           {user?.role === 'ADMIN' && (
+            <NavLink to="/admin/requests">Cereri rezervare</NavLink>
+          )}
+          {user?.role === 'ADMIN' && (
             <NavLink to="/admin/calendar">Calendar rezervari</NavLink>
           )}
           {user?.role === 'ADMIN' && (

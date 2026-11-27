@@ -19,6 +19,7 @@ const STATUSES = [
   {value: '', label: 'Toate starile'},
   {value: 'PENDING', label: 'In asteptare'},
   {value: 'CONFIRMED', label: 'Confirmate'},
+  {value: 'REJECTED', label: 'Respinse'},
   {value: 'CANCELLED', label: 'Anulate'},
   {value: 'EXPIRED', label: 'Expirate'},
 ];
