@@ -10,10 +10,6 @@ import ResourceDetailsPage from './pages/ResourceDetailsPage.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
 import TeamReservationsPage from './pages/TeamReservationsPage.jsx';
 
-/**
- * Rutele aplicatiei.
- * @return {JSX.Element}
- */
 export default function App() {
   return (
     <BrowserRouter>

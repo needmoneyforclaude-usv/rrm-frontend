@@ -6,16 +6,6 @@ import {
 import {getTeams} from '../api/auth.js';
 import {formatShortDay} from '../utils/format.js';
 
-/**
- * Dialogul in care adminul seteaza o perioada de mentenanta.
- * Inainte de salvare arata rezervarile care vor fi anulate.
- * @param {{
- *   resource: Object,
- *   onClose: function(),
- *   onSaved: function(Object),
- * }} props
- * @return {JSX.Element}
- */
 export default function MaintenanceDialog({resource, onClose, onSaved}) {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
@@ -34,7 +24,6 @@ export default function MaintenanceDialog({resource, onClose, onSaved}) {
 
   const intervalValid = startTime && endTime && endTime > startTime;
 
-  // Recalculam rezervarile afectate cand se schimba intervalul.
   useEffect(() => {
     setAffected(null);
     if (!intervalValid) {

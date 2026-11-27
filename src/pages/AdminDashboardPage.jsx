@@ -3,11 +3,6 @@ import {useOutletContext} from 'react-router-dom';
 import {getWeekStatistics} from '../api/statistics.js';
 import {addDays, toIsoDate} from '../utils/format.js';
 
-/**
- * Dashboard-ul administratorului (wireframe 07): rezervari active,
- * resurse in mentenanta si gradul de ocupare pe resursa.
- * @return {JSX.Element}
- */
 export default function AdminDashboardPage() {
   const {user, loading} = useOutletContext();
   const [stats, setStats] = useState(null);

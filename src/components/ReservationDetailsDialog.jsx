@@ -8,22 +8,11 @@ import {
 } from '../utils/format.js';
 import StatusBadge from './StatusBadge.jsx';
 
-/**
- * Se mai poate anula: e activa si nu a inceput inca.
- * @param {Object} reservation
- * @return {boolean}
- */
 export function canBeCancelled(reservation) {
   return ['PENDING', 'CONFIRMED'].includes(reservation.status) &&
     new Date(reservation.start_time) > new Date();
 }
 
-/**
- * Detaliile unei rezervari, deschise din calendarul adminului.
- * @param {{reservation: Object, onClose: function(),
- *     onCancel: function(Object)}} props
- * @return {JSX.Element}
- */
 export default function ReservationDetailsDialog({reservation, onClose,
   onCancel}) {
   const rows = [

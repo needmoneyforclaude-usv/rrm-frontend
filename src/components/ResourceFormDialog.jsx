@@ -8,13 +8,6 @@ import {
 
 const MAX_IMAGE_MB = 5;
 
-/**
- * Dialogul de adaugare / editare a unei resurse (zona de admin):
- * nume, categorie, specificatii, pret pe ora si poza.
- * @param {{resource: ?Object, onClose: function(),
- *     onSaved: function(Object)}} props resource = null pentru resursa noua
- * @return {JSX.Element}
- */
 export default function ResourceFormDialog({resource, onClose, onSaved}) {
   const [categories, setCategories] = useState([]);
   const [form, setForm] = useState({

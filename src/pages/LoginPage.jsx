@@ -2,10 +2,6 @@ import {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {login} from '../api/auth.js';
 
-/**
- * Pagina de login.
- * @return {JSX.Element}
- */
 export default function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');

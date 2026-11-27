@@ -12,11 +12,6 @@ import {addDays, formatHours, toIsoDate} from '../utils/format.js';
 const DAY_NAMES = ['Lun', 'Mar', 'Mie', 'Joi', 'Vin', 'Sam', 'Dum'];
 const INACTIVE = ['CANCELLED', 'EXPIRED'];
 
-/**
- * Lunea saptamanii care contine data.
- * @param {!Date} date
- * @return {!Date}
- */
 function mondayOf(date) {
   const monday = new Date(date);
   monday.setHours(0, 0, 0, 0);
@@ -24,19 +19,10 @@ function mondayOf(date) {
   return monday;
 }
 
-/**
- * @param {!Date} date
- * @return {string} ex. "30.11"
- */
 function dayMonth(date) {
   return toIsoDate(date).slice(8, 10) + '.' + toIsoDate(date).slice(5, 7);
 }
 
-/**
- * Calendarul adminului: toate rezervarile din saptamana, pe resurse si zile.
- * La click pe o rezervare se deschid detaliile, de unde poate fi anulata.
- * @return {JSX.Element}
- */
 export default function AdminCalendarPage() {
   const {user, loading: userLoading} = useOutletContext();
   const [monday, setMonday] = useState(() => mondayOf(new Date()));
@@ -85,7 +71,6 @@ export default function AdminCalendarPage() {
     }
   }, [isAdmin, loadReservations]);
 
-  // rezervarile grupate pe resursa si zi: {"resursa|2026-11-30": [...]}
   const cells = useMemo(() => {
     const grouped = {};
     reservations

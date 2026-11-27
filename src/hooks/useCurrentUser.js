@@ -1,10 +1,6 @@
 import {useEffect, useState} from 'react';
 import {apiRequest, clearToken, getToken} from '../api/client.js';
 
-/**
- * Utilizatorul logat (din GET /api/users/me) sau null.
- * @return {{user: ?Object, loading: boolean}}
- */
 export function useCurrentUser() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(Boolean(getToken()));

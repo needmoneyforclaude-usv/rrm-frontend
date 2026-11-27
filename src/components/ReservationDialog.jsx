@@ -11,14 +11,6 @@ import {affiliationYears} from '../utils/pricing.js';
 const WEEK_DAYS = ['Duminica', 'Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri',
   'Sambata'];
 
-/**
- * Dialogul de rezervare (wireframe 04). La deschidere se creeaza rezervarea
- * PENDING, ca intervalul sa fie blocat, si se afiseaza sumarul de pret.
- * Team Lead-ul confirma sau renunta.
- * @param {{resource: Object, interval: {start_time: string, end_time: string},
- *     user: Object, onClose: function(), onDone: function(string)}} props
- * @return {JSX.Element}
- */
 export default function ReservationDialog({resource, interval, user, onClose,
   onDone}) {
   const [reservation, setReservation] = useState(null);
@@ -29,7 +21,6 @@ export default function ReservationDialog({resource, interval, user, onClose,
   const created = useRef(false);
 
   useEffect(() => {
-    // in StrictMode efectul ruleaza de doua ori; rezervarea se creeaza o data
     if (created.current) {
       return;
     }

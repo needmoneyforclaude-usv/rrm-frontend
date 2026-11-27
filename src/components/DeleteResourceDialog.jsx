@@ -1,12 +1,6 @@
 import {useState} from 'react';
 import {deleteResource} from '../api/resources.js';
 
-/**
- * Confirmarea stergerii unei resurse din zona de admin.
- * @param {{resource: Object, onClose: function(),
- *     onDeleted: function()}} props
- * @return {JSX.Element}
- */
 export default function DeleteResourceDialog({resource, onClose, onDeleted}) {
   const [error, setError] = useState('');
   const [sending, setSending] = useState(false);

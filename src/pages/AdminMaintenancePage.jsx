@@ -7,18 +7,12 @@ import ResourceFormDialog from '../components/ResourceFormDialog.jsx';
 import ResourceImage from '../components/ResourceImage.jsx';
 import {formatPrice} from '../utils/format.js';
 
-/**
- * Zona de admin: lista resurselor, adaugare / editare / stergere resursa si
- * setarea perioadelor de mentenanta.
- * @return {JSX.Element}
- */
 export default function AdminMaintenancePage() {
   const {user, loading} = useOutletContext();
   const [resources, setResources] = useState([]);
   const [selected, setSelected] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  // null = inchis, {} = resursa noua, altfel resursa editata
   const [editing, setEditing] = useState(null);
   const [deleting, setDeleting] = useState(null);
 

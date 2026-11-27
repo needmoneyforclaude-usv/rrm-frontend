@@ -23,10 +23,6 @@ const STATUSES = [
   {value: 'EXPIRED', label: 'Expirate'},
 ];
 
-/**
- * Pagina de admin cu toate rezervarile si cine le-a facut.
- * @return {JSX.Element}
- */
 export default function AdminReservationsPage() {
   const {user, loading: userLoading} = useOutletContext();
   const [reservations, setReservations] = useState([]);
@@ -76,7 +72,6 @@ export default function AdminReservationsPage() {
     setReloadKey((key) => key + 1);
   };
 
-  // cautare dupa numele sau emailul celui care a rezervat
   const visible = useMemo(() => {
     const text = search.trim().toLowerCase();
     if (!text) {
