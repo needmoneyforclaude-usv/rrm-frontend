@@ -30,7 +30,7 @@ export default function RejectReservationDialog({reservation, onClose,
           {formatHours(reservation.start_time, reservation.end_time)}.
         </p>
         <p className="muted">
-          Team Lead-ul care a trimis cererea primeste notificare.
+          Echipa care a trimis cererea primeste notificare.
         </p>
         <label>
           Motiv (optional)
