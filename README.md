@@ -28,3 +28,13 @@ App runs on http://localhost:5173. Requests to `/api` and `/static` are proxied 
 ```
 npm run build
 ```
+
+## End-to-end tests (Cypress)
+
+Start the backend and the frontend first, then run:
+
+```
+npm run test:e2e
+```
+
+or open the Cypress UI with `npm run cy:open`.
