@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {getNotifications, markAsRead} from '../api/notifications.js';
 import {formatDateTime} from '../utils/format.js';
 
-const REFRESH_MS = 30000;
+const REFRESH_MS = 1000;
 
 export default function NotificationsPanel() {
   const [notifications, setNotifications] = useState([]);
@@ -14,8 +14,16 @@ export default function NotificationsPanel() {
 
   useEffect(() => {
     load();
-    const timer = setInterval(load, REFRESH_MS);
-    return () => clearInterval(timer);
+    const timer = setInterval(() => {
+      if (!document.hidden) {
+        load();
+      }
+    }, REFRESH_MS);
+    document.addEventListener('visibilitychange', load);
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener('visibilitychange', load);
+    };
   }, []);
 
   const unread = notifications.filter((n) => !n.is_read).length;
