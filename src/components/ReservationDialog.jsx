@@ -63,6 +63,7 @@ export default function ReservationDialog({resource, interval, user, onClose,
   const end = new Date(interval.end_time);
   const hours = (end - start) / 3600000;
   const years = affiliationYears(user.affiliation_date);
+  const hasDiscount = reservation != null && reservation.discount > 0;
 
   return (
     <div className="dialog-backdrop">
@@ -101,16 +102,23 @@ export default function ReservationDialog({resource, interval, user, onClose,
               <span>Pret de baza</span>
               <span>{formatPrice(reservation.price)}</span>
             </div>
-            <div>
-              <span>Reducere loyalty ({years} ani)</span>
-              <span>
-                &minus;{formatPrice(reservation.price -
-                  reservation.final_price)} ({reservation.discount}%)
-              </span>
-            </div>
+            {hasDiscount && (
+              <div>
+                <span>Reducere loyalty ({years} ani)</span>
+                <span>
+                  &minus;{formatPrice(reservation.price -
+                    reservation.final_price)} ({reservation.discount}%)
+                </span>
+              </div>
+            )}
             <div className="price-total">
               <span>Total</span>
-              <span>{formatPrice(reservation.final_price)}</span>
+              <span>
+                {hasDiscount && (
+                  <s className="price-old">{formatPrice(reservation.price)}</s>
+                )}
+                {formatPrice(reservation.final_price)}
+              </span>
             </div>
           </div>
         )}
