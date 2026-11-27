@@ -1013,3 +1013,9 @@ h3 {
   margin: 0;
   text-align: right;
 }
+
+.price-old {
+  margin-right: 8px;
+  color: var(--color-muted);
+  font-weight: 400;
+}
