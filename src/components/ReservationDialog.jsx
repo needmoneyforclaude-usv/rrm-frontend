@@ -1,10 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {getTeams} from '../api/auth.js';
-import {
-  cancelReservation,
-  confirmReservation,
-  createReservation,
-} from '../api/reservations.js';
+import {createReservation, quoteReservation} from '../api/reservations.js';
 import {formatPrice} from '../utils/format.js';
 import {affiliationYears} from '../utils/pricing.js';
 
@@ -13,24 +9,24 @@ const WEEK_DAYS = ['Duminica', 'Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri',
 
 export default function ReservationDialog({resource, interval, user, onClose,
   onDone}) {
-  const [reservation, setReservation] = useState(null);
+  const [quote, setQuote] = useState(null);
   const [teamName, setTeamName] = useState('');
   const [purpose, setPurpose] = useState('');
   const [error, setError] = useState('');
   const [sending, setSending] = useState(false);
-  const created = useRef(false);
+  const loaded = useRef(false);
 
   useEffect(() => {
-    if (created.current) {
+    if (loaded.current) {
       return;
     }
-    created.current = true;
-    createReservation({
+    loaded.current = true;
+    quoteReservation({
       resource_id: resource.id,
       start_time: interval.start_time,
       end_time: interval.end_time,
     })
-        .then(setReservation)
+        .then(setQuote)
         .catch((e) => setError(e.message));
     getTeams()
         .then((teams) => {
@@ -40,23 +36,22 @@ export default function ReservationDialog({resource, interval, user, onClose,
         .catch(() => null);
   }, [resource.id, interval, user.team_id]);
 
-  const handleConfirm = async () => {
+  const handleSend = async () => {
     setSending(true);
     setError('');
     try {
-      await confirmReservation(reservation.id, purpose.trim());
-      onDone('Rezervarea a fost confirmata. Echipa a primit notificare.');
+      await createReservation({
+        resource_id: resource.id,
+        start_time: interval.start_time,
+        end_time: interval.end_time,
+        purpose: purpose.trim() || null,
+      });
+      onDone('Cererea a fost trimisa. Primesti notificare cand ' +
+        'administratorul o aproba sau o respinge.');
     } catch (e) {
       setError(e.message);
       setSending(false);
     }
-  };
-
-  const handleCancel = async () => {
-    if (reservation) {
-      await cancelReservation(reservation.id).catch(() => null);
-    }
-    onClose();
   };
 
   const start = new Date(interval.start_time);
@@ -93,24 +88,24 @@ export default function ReservationDialog({resource, interval, user, onClose,
           />
         </label>
 
-        {!reservation && !error && <p className="muted">Se verifica...</p>}
+        {!quote && !error && <p className="muted">Se verifica...</p>}
 
-        {reservation && (
+        {quote && (
           <div className="price-box">
             <div>
               <span>Pret de baza</span>
-              <span>{formatPrice(reservation.price)}</span>
+              <span>{formatPrice(quote.price)}</span>
             </div>
             <div>
               <span>Reducere loyalty ({years} ani)</span>
               <span>
-                &minus;{formatPrice(reservation.price -
-                  reservation.final_price)} ({reservation.discount}%)
+                &minus;{formatPrice(quote.price - quote.final_price)}{' '}
+                ({quote.discount}%)
               </span>
             </div>
             <div className="price-total">
               <span>Total</span>
-              <span>{formatPrice(reservation.final_price)}</span>
+              <span>{formatPrice(quote.final_price)}</span>
             </div>
           </div>
         )}
@@ -119,12 +114,12 @@ export default function ReservationDialog({resource, interval, user, onClose,
 
         <div className="dialog-actions">
           <button type="button" className="btn btn-secondary"
-            onClick={handleCancel} disabled={sending}>
+            onClick={onClose} disabled={sending}>
             Renunta
           </button>
-          <button type="button" className="btn" onClick={handleConfirm}
-            disabled={!reservation || sending}>
-            {sending ? 'Se confirma...' : 'Confirma rezervarea'}
+          <button type="button" className="btn" onClick={handleSend}
+            disabled={!quote || sending}>
+            {sending ? 'Se trimite...' : 'Trimite cererea'}
           </button>
         </div>
       </div>

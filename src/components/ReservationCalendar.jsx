@@ -8,6 +8,7 @@ const STATUS_LABELS = {
   FREE: 'Liber',
   BOOKED: 'Ocupat',
   TEAM: 'Echipa ta',
+  REQUESTED: 'Cerere trimisa',
   MAINTENANCE: 'Mentenanta',
   PAST: '-',
 };
